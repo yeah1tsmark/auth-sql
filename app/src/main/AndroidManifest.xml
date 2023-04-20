@@ -12,6 +12,9 @@
         android:theme="@style/Theme.AuthenticationSQLMark"
         tools:targetApi="31">
         <activity
+            android:name=".dashboard"
+            android:exported="false" />
+        <activity
             android:name=".Loginactivity"
             android:exported="false" />
         <activity

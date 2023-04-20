@@ -1,5 +1,6 @@
 package com.example.authenticationsql_mark
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
@@ -10,8 +11,8 @@ import android.widget.EditText
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
-    lateinit var editname_1:EditText
-    lateinit var editname_2:EditText
+    lateinit var editnameone:EditText
+    lateinit var editnametwo:EditText
     lateinit var editemail:EditText
     lateinit var editpassword:EditText
     lateinit var regbutton:Button
@@ -21,29 +22,30 @@ class MainActivity : AppCompatActivity() {
     lateinit var db:SQLiteDatabase
 
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        editname_1.findViewById<EditText>(R.id.edt_name_first)
-        editname_2.findViewById<EditText>(R.id.edt_name_second )
-        editemail.findViewById<EditText>(R.id.edt_email)
-        editpassword.findViewById<EditText>(R.id.edt_password)
-        regbutton.findViewById<Button>(R.id.btn_register)
-        loginbutton.findViewById<Button>(R.id.btn_login)
-        viewbutton.findViewById<Button>(R.id.btn_view)
-        deletebutton.findViewById<Button>(R.id.btn_delete)
+        editnameone = findViewById(R.id.edt_name_first)
+        editnametwo = findViewById(R.id.edt_name_second)
+        editemail=findViewById(R.id.edt_email)
+        editpassword=findViewById(R.id.edt_password)
+        regbutton=findViewById(R.id.btn_register)
+        loginbutton=findViewById(R.id.btn_login)
+        viewbutton=findViewById(R.id.btn_view)
+        deletebutton=findViewById(R.id.btn_delete)
 
         // create db called Emobilis
-        db = openOrCreateDatabase("Emobilisdb", Context.MODE_PRIVATE, null)
+        db = openOrCreateDatabase("Emobilisdb", MODE_PRIVATE, null)
 
         // create a table called users in the db
-        db.execSQL("CREATE TABLE IF NOT EXISTS users(frstname VARCHAR, scndname VARCHAR, baruapepe VARCHAR, nenosiri VARCHAR)")
+        db.execSQL("CREATE TABLE IF NOT EXISTS users(firstname VARCHAR, secondname VARCHAR, baruapepe VARCHAR, nenosiri VARCHAR)")
 
         //set onclick listeners to buttons
         regbutton.setOnClickListener {
-            var name1 = editname_1.text.toString().trim()
-            var name2 = editname_2.text.toString().trim()
+            var name1 = editnameone.text.toString().trim()
+            var name2 = editnametwo.text.toString().trim()
             var email = editemail.text.toString().trim()
             var password = editpassword.text.toString().trim()
 
@@ -53,7 +55,9 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error!Please fill all inputs", Toast.LENGTH_SHORT).show()
             }else{
                 // proceed to save data
-                db.execSQL("INSERT INTO users VALUES('"+name1+"','"+name2+"''"+email+"','"+password+"')")
+
+                db.execSQL("INSERT INTO clients VALUES ('"+name1+"','"+name2+"','"+email+"','"+password+"')")
+
                 Toast.makeText(this, "SUCCESS!User saved successfully!!", Toast.LENGTH_SHORT).show()
 
                 var gotologin = Intent(this, Loginactivity::class.java)

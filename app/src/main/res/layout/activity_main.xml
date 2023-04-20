@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
+            android:hint="Enter first name"
             android:id="@+id/edt_name_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,19 +29,19 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="First name"
+            android:text=""
             android:textSize="19sp" />
 
         <EditText
-            android:id="@+id/edt_name_second
-"
+            android:hint="Enter second name"
+            android:id="@+id/edt_name_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="Second name"
+            android:text=""
             android:textSize="19sp" />
 
         <EditText

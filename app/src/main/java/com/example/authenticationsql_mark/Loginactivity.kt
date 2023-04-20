@@ -2,6 +2,7 @@ package com.example.authenticationsql_mark
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -13,16 +14,19 @@ class Loginactivity : AppCompatActivity() {
     lateinit var editforloginpass:EditText
     lateinit var buttonforlogin:Button
     lateinit var buttonforcreateacc:Button
+    lateinit var db:SQLiteDatabase
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loginactivity)
 
-        editforloginemail.findViewById<EditText>(R.id.edtforlogin)
-        editforloginpass.findViewById<EditText>(R.id.edtforcreateacc)
-        buttonforlogin.findViewById<Button>(R.id.btnforlogin)
-        buttonforcreateacc.findViewById<Button>(R.id.btnforcreateacc)
+        editforloginemail = findViewById(R.id.edtforlogin)
+        editforloginpass = findViewById(R.id.edtforcreateacc)
+        buttonforlogin = findViewById(R.id.btnforlogin)
+        buttonforcreateacc = findViewById(R.id.btnforcreateacc)
+
+        db = openOrCreateDatabase("Emobilisdb", MODE_PRIVATE, null)
 
 
         buttonforlogin.setOnClickListener {
@@ -35,6 +39,18 @@ class Loginactivity : AppCompatActivity() {
                 Toast.makeText(this, "Cannot submit empty field!", Toast.LENGTH_SHORT).show()
             }
             else{
+                val cursor = db.rawQuery("SELECT * FROM users WHERE baruapepe=? AND nenosiri=?",
+                    arrayOf(arrayOf(editforloginemail, editforloginpass).toString())
+                )
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    // user is authenticated, start a new activity
+                    val intent = Intent(this, dashboard::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Invalid email or password, please try again", Toast.LENGTH_SHORT).show()
+                }
 
             }
 
